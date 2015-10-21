@@ -1,0 +1,24 @@
+{
+    "name": "PieterScheffers/upperscore",
+    "description": "General functions for PHP",
+    "version": "0.0.1",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Pieter Scheffers",
+            "email": "info@pieterscheffers.nl",
+            "homepage": "https://pieterscheffers.nl",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/PieterScheffers/upperscore/issues",
+        "wiki": "https://github.com/PieterScheffers/upperscore/wiki",
+        "source": "https://github.com/PieterScheffers/upperscore"
+    },
+    "autoload": {
+        "files": [ 
+            "src/autoload.php"
+        ]
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 
-namespace PieterScheffers\upperscore;
+namespace pieterscheffers\upperscore;
 
 
 /**

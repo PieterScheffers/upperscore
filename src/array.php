@@ -1,7 +1,7 @@
 <?php
 
 namespace pieterscheffers\upperscore;
-
+ 
 /**
  * indexArray
  * indexes the array, make the keys like a prop of the objects

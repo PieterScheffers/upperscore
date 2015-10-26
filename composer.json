@@ -1,7 +1,7 @@
 {
-    "name": "pisc/upperscore",
+    "name": "pieterscheffers/upperscore",
     "description": "General functions for PHP",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "license": "MIT",
     "authors": [
         {

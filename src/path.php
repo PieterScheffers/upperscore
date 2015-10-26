@@ -1,6 +1,6 @@
 <?php
 
-namespace pieterscheffers\upperscore;
+namespace pisc\upperscore;
 
 
 /**

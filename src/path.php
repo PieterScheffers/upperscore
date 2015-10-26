@@ -13,7 +13,7 @@ namespace pisc\upperscore;
  * @return string        combined path  
  */
 function pathCombine() {
-	$paths = array_values( array_flatten(func_get_args()) );
+	$paths = array_values( arrayFlatten(func_get_args()) );
 
 	$newPaths = array();
 	$nrOfPaths = count($paths);

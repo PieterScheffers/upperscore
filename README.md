@@ -25,3 +25,7 @@ use pisc\upperscore as u;
 $flat = u\arrayFlatten([ 'cow', [ 'bear', ['bunny', 'santa' ], 'rabbit' ]]);
 ```
 
+## Run tests
+```sh
+$ ./phpunit.sh
+```

@@ -77,13 +77,13 @@ function defdeep($var, $key, $def='') {
 
 
 /**
- * intervalsCollision
+ * intervalsCollide
  * 
  * @param  array  $i1  Array with 2 values
  * @param  array  $i2  Array with 2 values
  * @return bool        Whether the intervals collide or not
  */
-function intervalsCollision($i1, $i2) {
+function intervalsCollide($i1, $i2) {
 
 	if( !(($i1[1] <= $i2[0] && $i1[1] < $i2[1]) || ($i1[0] > $i2[0] && $i1[0] >= $i2[1])) ) {
 		return true;

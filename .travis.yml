@@ -30,6 +30,9 @@ php:
 #     - php: 7.0
 #     - php: hhvm
 
+install:
+   - composer install
+
 # execute any number of scripts before the test run, custom env's are available as variables
 # before_script:
 #   - if [[ "$DB" == "pgsql" ]]; then psql -c "DROP DATABASE IF EXISTS hello_world_test;" -U postgres; fi

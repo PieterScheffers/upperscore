@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/PieterScheffers/upperscore.svg?branch=master)](https://travis-ci.org/PieterScheffers/upperscore)
+
 # upperscore
 General functions for PHP
 

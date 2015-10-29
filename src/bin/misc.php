@@ -50,7 +50,7 @@ function keyToArray($key) {
  * defdeep
  *
  * example: 
- * arr = [ 'banana' => [ 'kiwi': 'strawberry' ], 'berry' => [] ]
+ * arr = [ 'banana' => [ 'kiwi' => 'strawberry' ], 'berry' => [] ]
  *
  * keys exist:
  * value = defDeep(arr, 'banana.kiwi', 'cookie')  

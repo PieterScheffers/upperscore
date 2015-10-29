@@ -7,6 +7,7 @@ use function pisc\upperscore\arrayFlatten;
 use function pisc\upperscore\arrayDelete;
 use function pisc\upperscore\arraySelect;
 use function pisc\upperscore\arrayDetect;
+use function pisc\upperscore\arrayType;
 
 class ArrayTest extends PHPUnit_Framework_TestCase {
 
@@ -95,5 +96,16 @@ class ArrayTest extends PHPUnit_Framework_TestCase {
 
     	$this->assertEquals( $selectedItem, $shouldBe );
 	}
+
+    public function testArrayType() {
+        $indexed = [ 0 => 'rabbit', 1 => 'cow', 2 => 'horse', 3 => 'cat', 4 => 'dog', 5 => 'frog' ];
+        $sparse  = [ 0 => 'rabbit',             2 => 'horse', 3 => 'cat',             5 => 'frog', 7 => 'cow', 10 => 'dog' ];
+        $associative = [ 'a' => 'rabbit', 'b' => 'cow', 2 => 'horse', 3 => 'cat', 4 => 'dog', 5 => 'frog' ];
+
+        $this->assertEquals( arrayType($indexed),     'index' );
+        $this->assertEquals( arrayType($sparse),      'sparse' );
+        $this->assertEquals( arrayType($associative), 'assoc' );
+
+    }
 
 }

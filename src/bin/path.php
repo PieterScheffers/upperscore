@@ -40,6 +40,7 @@ function pathCombine() {
  * sanitizePath
  *
  * Sanitizes a path, so it is a valid path in Windows & Linux
+ * It replaces all bad characters with a character of choice
  * 
  * @param  string  $path         string of a path
  * @param  string  $replacement  character to use for replacement of bad characters
@@ -47,6 +48,9 @@ function pathCombine() {
  */
 function sanitizePath($path, $replacement = "_") {
 	if($path === '') return $path;
+
+	// make sure replacement isn't a bad character
+	$replacement = sanitizePath($replacement);
 
 	// https://msdn.microsoft.com/en-us/library/aa365247
 	

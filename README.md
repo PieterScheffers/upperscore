@@ -1,3 +1,4 @@
+[![Latest Stable Version](https://img.shields.io/packagist/v/pisc/upperscore.svg?style=flat-square)](https://packagist.org/packages/pisc/upperscore)
 [![Build Status](https://travis-ci.org/PieterScheffers/upperscore.svg?branch=master)](https://travis-ci.org/PieterScheffers/upperscore)
 
 # upperscore

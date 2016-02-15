@@ -16,10 +16,25 @@ namespace pisc\upperscore;
 function def($arr, $key, $def="") {
 	if( $arr ) {
 
-		if( is_array($arr) && isset($arr[$key]) ) {
+		// Check for function
+		if( strEndsWith($key, '()') && is_object($arr) ) {
+			$key = substr($key, 0, strlen($key) - 2 );
+			$result = $arr->$key();
+
+			if( $result ) {
+				return $result;
+			}
+		}
+
+		// Check for array of ArrayAccessable object
+		if( 
+			(is_array($arr) && isset($arr[$key])) || 
+			(is_object($arr) && $arr instanceof ArrayAccess) 
+		) {
 
 			return $arr[$key];
 
+		// Check for object
 		} else if( is_object($arr) && isset($arr->$key) ) {
 
 			return $arr->$key;
@@ -36,8 +51,8 @@ function def($arr, $key, $def="") {
  * keyToArray 
  *
  * dot-seperated-keys string to keys array
- * input:  'this.are.all.keys'
- * output: [ 'this', 'are', 'all', 'keys' ]
+ * input:  'these.are.all.keys'
+ * output: [ 'these', 'are', 'all', 'keys' ]
  * 
  * @param  string  $key  dot-seperated keys
  * @return array         array of keys
@@ -73,6 +88,43 @@ function defdeep($var, $key, $def='') {
 	}
 
 	return $var ?: $def;
+}
+
+
+function set($obj, $key, $val) {
+	if( is_object($obj) && !isset($obj->key) ) {
+
+		$obj->$key = $val;
+
+	} else if( is_array($obj) && !isset($obj[$key]) ) {
+
+		$obj[$key] = $val;
+
+	}
+
+	return $obj;
+}
+
+function setDeep($obj, $key, $val, $type="array") {
+	$def = $type === 'array' ? [] : (object)[];
+	$object = $obj;
+	$keys = keyToArray($key);
+	$lastKey = array_pop($keys);
+
+	foreach ($keys as $k) {
+		echo "obj\n";
+		print_r($object);
+		$obj = def( set($obj, $k, $def), $k);
+		print_r($obj);
+		echo "\n";
+	}
+	set($obj, $lastKey, $val);
+
+	return $object;
+}
+
+function access($obj, $key) {
+	$keys = keyToArray($key);
 }
 
 

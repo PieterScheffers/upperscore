@@ -91,3 +91,16 @@ function xmlEscape($str) {
 
 	return str_replace($forbidden, $replaceWith, $str);
 }
+
+
+// Source: http://stackoverflow.com/questions/834303/startswith-and-endswith-functions-in-php
+
+function strStartsWith($haystack, $needle) {
+    // search backwards starting from haystack length characters from the end
+    return $needle === "" || strrpos($haystack, $needle, -strlen($haystack)) !== false;
+}
+
+function strEndsWith($haystack, $needle) {
+    // search forward starting from end minus needle length characters
+    return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
+}

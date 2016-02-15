@@ -4,7 +4,7 @@ namespace pisc\upperscore;
 
 
 /**
- * def
+ * defOne
  * 
  * Check if key isset, otherwise return default value
  * 
@@ -13,7 +13,7 @@ namespace pisc\upperscore;
  * @param  mixed         $def  default value
  * @return mixed               return object/array value or default
  */
-function def($arr, $key, $def="") {
+function defOne($arr, $key, $def="") {
 	if( $arr ) {
 
 		// Check for function
@@ -62,17 +62,17 @@ function keyToArray($key) {
 }
 
 /**
- * defdeep
+ * def
  *
  * example: 
  * arr = [ 'banana' => [ 'kiwi' => 'strawberry' ], 'berry' => [] ]
  *
  * keys exist:
- * value = defDeep(arr, 'banana.kiwi', 'cookie')  
+ * value = def(arr, 'banana.kiwi', 'cookie')  
  *      => 'strawberry'
  *
  * key doesn't exist:
- * value = defDeep(arr, 'berry.kiwi', 'cookie')  
+ * value = def(arr, 'berry.kiwi', 'cookie')  
  *      => 'cookie'
  * 
  * @param  array/object  $var  array or object
@@ -80,48 +80,53 @@ function keyToArray($key) {
  * @param  mixed         $def  default value
  * @return mixed               value of key in array or default value
  */
-function defdeep($var, $key, $def='') {
+function def($var, $key, $def='') {
 	$keys = keyToArray($key);
 
 	foreach ($keys as $k) {
-		$var = def($var, $k);
+		$var = defOne($var, $k);
 	}
 
 	return $var ?: $def;
 }
 
-
-function set($obj, $key, $val) {
-	if( is_object($obj) && !isset($obj->key) ) {
-
-		$obj->$key = $val;
-
-	} else if( is_array($obj) && !isset($obj[$key]) ) {
-
-		$obj[$key] = $val;
-
-	}
-
-	return $obj;
+// alias: old name of def
+function defDeep($var, $key, $def='') { 
+	return def($var, $key, $def);
 }
 
-function setDeep($obj, $key, $val, $type="array") {
-	$def = $type === 'array' ? [] : (object)[];
-	$object = $obj;
-	$keys = keyToArray($key);
-	$lastKey = array_pop($keys);
 
-	foreach ($keys as $k) {
-		echo "obj\n";
-		print_r($object);
-		$obj = def( set($obj, $k, $def), $k);
-		print_r($obj);
-		echo "\n";
-	}
-	set($obj, $lastKey, $val);
+// function set($obj, $key, $val) {
+// 	if( is_object($obj) && !isset($obj->key) ) {
 
-	return $object;
-}
+// 		$obj->$key = $val;
+
+// 	} else if( is_array($obj) && !isset($obj[$key]) ) {
+
+// 		$obj[$key] = $val;
+
+// 	}
+
+// 	return $obj;
+// }
+
+// function setDeep($obj, $key, $val, $type="array") {
+// 	$def = $type === 'array' ? [] : (object)[];
+// 	$object = $obj;
+// 	$keys = keyToArray($key);
+// 	$lastKey = array_pop($keys);
+
+// 	foreach ($keys as $k) {
+// 		echo "obj\n";
+// 		print_r($object);
+// 		$obj = def( set($obj, $k, $def), $k);
+// 		print_r($obj);
+// 		echo "\n";
+// 	}
+// 	set($obj, $lastKey, $val);
+
+// 	return $object;
+// }
 
 function access($obj, $key) {
 	$keys = keyToArray($key);

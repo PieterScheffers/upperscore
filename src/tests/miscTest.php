@@ -2,6 +2,7 @@
 
 require_once __DIR__ . "/../autoload.php";
 
+use function pisc\upperscore\defOne;
 use function pisc\upperscore\def;
 use function pisc\upperscore\defDeep;
 use function pisc\upperscore\set;
@@ -25,27 +26,53 @@ class MiscTest extends PHPUnit_Framework_TestCase {
         echo $this->getName() . "\n";
     }
 
-	public function testDef() {
+	public function testDefOne() {
 		$arr = [ 'a' => 'kiwi', 'b' => 'nut' ];
 
-		$a = def($arr, 'a');
+		$a = defOne($arr, 'a');
 		$this->assertEquals($a, 'kiwi');
 
-		$b = def($arr, 'b');
+		$b = defOne($arr, 'b');
 		$this->assertEquals($b, 'nut');
 
-		$c = def($arr, 'c');
+		$c = defOne($arr, 'c');
 		$this->assertEquals($c, '');
 
 
 		$obj = new TestClass();
 
-		$d = def($obj, 'someAttribute');
+		$d = defOne($obj, 'someAttribute');
 		$this->assertEquals($d, 'Wookie');
 
-		$e = def($obj, 'returnsString()');
+		$e = defOne($obj, 'returnsString()');
 		$this->assertEquals($e, 'hasresult');
 
+	}
+
+	public function testDef() {
+		$arr = [ 'banana' => [ 'kiwi' => 'strawberry' ], 'berry' => [] ];
+
+		$value1 = def($arr, 'banana.kiwi', 'cookie');
+ 		$this->assertEquals($value1, 'strawberry');
+
+		$value2 = def($arr, 'berry.kiwi', 'cookie');
+		$this->assertEquals($value2, 'cookie');
+
+		$value3 = def($arr, 'banana.berry', 'cookie');
+		$this->assertEquals($value3, 'cookie');
+
+		$obj = new TestClass();
+
+		$value4 = def($obj, 'returnsSomeArray().strawberry.stick');
+		$this->assertEquals($value4, 'stones');
+
+		$a = [ "Mickey" => "Mouse", "testObject" => $obj ];
+
+		$value5 = def($a, 'testObject.someAttribute');
+		$this->assertEquals($value5, 'Wookie');
+
+		$value6 = def($a, 'testObject.returnsSomeArray().strawberry.foo');
+		$this->assertEquals($value6, 'bar');
 	}
 
 	public function testDefDeep() {
@@ -74,54 +101,54 @@ class MiscTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($value6, 'bar');
 	}
 
-	public function testSet() {
-		$object = (object)[];
+	// public function testSet() {
+	// 	$object = (object)[];
 
-		$object = set($object, 'banana', 'somevalue');
+	// 	$object = set($object, 'banana', 'somevalue');
 
-		$this->assertEquals( (object)['banana' => 'somevalue'] , $object);
-	}
+	// 	$this->assertEquals( (object)['banana' => 'somevalue'] , $object);
+	// }
 
-	public function testSetDeepArray() {
-		$object = (object)[];
+	// public function testSetDeepArray() {
+	// 	$object = (object)[];
 
-		$object = setDeep($object, 'kiwi.strawberry.cucumber.berry', 'somevalue');
+	// 	$object = setDeep($object, 'kiwi.strawberry.cucumber.berry', 'somevalue');
 
-		$shouldBe = (object)[
-			'kiwi' => [
-				'strawberry' => [
-					'cucumber' => [
-						[ 'berry' => 'somevalue']
-					]
-				]
-			]
-		];
+	// 	$shouldBe = (object)[
+	// 		'kiwi' => [
+	// 			'strawberry' => [
+	// 				'cucumber' => [
+	// 					[ 'berry' => 'somevalue']
+	// 				]
+	// 			]
+	// 		]
+	// 	];
 
-		echo "lkklklklkjlkljljljl\n";
-		print_r($object);
+	// 	echo "lkklklklkjlkljljljl\n";
+	// 	print_r($object);
 
-		$this->assertEquals( $shouldBe, $object );
-	}
+	// 	$this->assertEquals( $shouldBe, $object );
+	// }
 
-	public function testSetDeepObject() {
-		$object = (object)[];
+	// public function testSetDeepObject() {
+	// 	$object = (object)[];
 
-		$object = setDeep($object, 'kiwi.strawberry.cucumber.berry', 'somevalue', 'object');
+	// 	$object = setDeep($object, 'kiwi.strawberry.cucumber.berry', 'somevalue', 'object');
 
-		$shouldBe = (object)[
-			'kiwi' => (object)[
-				'strawberry' => (object)[
-					'cucumber' => (object)[
-						[ 'berry' => 'somevalue']
-					]
-				]
-			]
-		];
+	// 	$shouldBe = (object)[
+	// 		'kiwi' => (object)[
+	// 			'strawberry' => (object)[
+	// 				'cucumber' => (object)[
+	// 					[ 'berry' => 'somevalue']
+	// 				]
+	// 			]
+	// 		]
+	// 	];
 
-		echo "dmlgnskjghksjdg\n";
-		print_r($object);
+	// 	echo "dmlgnskjghksjdg\n";
+	// 	print_r($object);
 
-		$this->assertEquals( $shouldBe, $object );
-	}
+	// 	$this->assertEquals( $shouldBe, $object );
+	// }
 
 }

@@ -64,16 +64,42 @@ function keyToArray($key) {
 /**
  * def
  *
- * example: 
- * arr = [ 'banana' => [ 'kiwi' => 'strawberry' ], 'berry' => [] ]
+ * examples: 
+ * $arr = [ 'banana' => [ 'kiwi' => 'strawberry' ], 'berry' => [] ]
  *
  * keys exist:
- * value = def(arr, 'banana.kiwi', 'cookie')  
+ * $value = def($arr, 'banana.kiwi', 'cookie')  
  *      => 'strawberry'
  *
  * key doesn't exist:
- * value = def(arr, 'berry.kiwi', 'cookie')  
+ * $value = def($arr, 'berry.kiwi', 'cookie')  
  *      => 'cookie'
+ *
+ * ==============
+ * function calls
+ * ==============
+ * 
+ * class SomeClass {
+ *     public function someMethod() {
+ *         return [ 'banana' => [ 'kiwi' => 'strawberry' ], 'berry' => [] ];
+ *     }
+ *
+ *     public function falseyValue() {
+ *         return null;
+ *     }
+ * }
+ *
+ * $object = new SomeClass();
+ * $arr = [ "orange" => $object ];
+ *
+ * $value = def($arr, 'orange.someMethod().banana.kiwi', 'potato');
+ *     => 'strawberry'
+ *
+ * $value = def($arr, 'orange.someMethod().berry.kiwi', 'potato');
+ *     => 'potato'
+ *
+ * $value = def($arr, 'orange.falseyValue().banana.kiwi', 'potato');
+ *     => 'potato'
  * 
  * @param  array/object  $var  array or object
  * @param  string        $key  string or dot-seperated-keys string

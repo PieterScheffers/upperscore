@@ -1,7 +1,6 @@
 {
     "name": "pieterscheffers/upperscore",
     "description": "General functions for PHP",
-    "version": "1.0.5",
     "license": "MIT",
     "require": {
         "php": ">=5.4"

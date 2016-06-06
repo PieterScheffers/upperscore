@@ -106,10 +106,12 @@ function keyToArray($key) {
  * @param  mixed         $def  default value
  * @return mixed               value of key in array or default value
  */
-function def($var, $key, $def='') {
+function def($var, $key, $def='') 
+{
 	$keys = keyToArray($key);
 
-	foreach ($keys as $k) {
+	foreach ($keys as $k) 
+	{
 		$var = defOne($var, $k);
 	}
 
@@ -117,7 +119,8 @@ function def($var, $key, $def='') {
 }
 
 // alias: old name of def
-function defDeep($var, $key, $def='') { 
+function defDeep($var, $key, $def='') 
+{ 
 	return def($var, $key, $def);
 }
 

@@ -61,6 +61,11 @@ class MiscTest extends PHPUnit_Framework_TestCase {
 		$value3 = def($arr, 'banana.berry', 'cookie');
 		$this->assertEquals($value3, 'cookie');
 
+		$arrTwo = [ 2 => [ 'meetings' => [ 0 => [ 'date' => '27-04-2016', 'time_start' => '13:00', 'time_end' => '14:00' ], 1 => [ 'date' => '28-04-2016', 'time_start' => '15:00', 'time_end' => '16:00' ] ] ]];
+
+		$value4 = def($arrTwo, '2.meetings', []);
+		$this->assertEquals($value4, [ 0 => [ 'date' => '27-04-2016', 'time_start' => '13:00', 'time_end' => '14:00' ], 1 => [ 'date' => '28-04-2016', 'time_start' => '15:00', 'time_end' => '16:00' ] ]);
+
 		$obj = new TestClass();
 
 		$value4 = def($obj, 'returnsSomeArray().strawberry.stick');
@@ -73,6 +78,17 @@ class MiscTest extends PHPUnit_Framework_TestCase {
 
 		$value6 = def($a, 'testObject.returnsSomeArray().strawberry.foo');
 		$this->assertEquals($value6, 'bar');
+
+		$c = [ (object)[ 'id' => 6, 'name' => "Cow" ], (object)[ 'id' => 8, 'name' => 'Chicken' ] ];
+
+		$value7 = def($c, 0, 'nothing');
+		$this->assertEquals($value7, (object)[ 'id' => 6, 'name' => "Cow" ]);
+
+		$value8 = def($c, 1, 'nothing');
+		$this->assertEquals($value8, (object)[ 'id' => 8, 'name' => 'Chicken' ]);
+
+		$value9 = def($c, 2, 'nothing');
+		$this->assertEquals($value9, 'nothing');
 	}
 
 	public function testDefDeep() {

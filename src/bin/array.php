@@ -120,3 +120,98 @@ function arrayType( array $arr=[] ){
 
     return $type;
 }
+
+
+/**
+ * arraySortBy
+ *
+ * Sort by multiple keys
+ * 
+ * @param  array           $array    Array of values
+ * @param  string/array    $sortBy   String with dots seperating keys or array of keys/functions
+ * @param  array/callable  $methods  Array of compare methods or one method
+ * @return array                     Sorted array
+ */
+function arraySortBy($array, $sortBy, $methods)
+{
+	if( is_string($sortBy) )
+	{
+		$sortBy = explode('.', $sortBy);
+	}
+
+	$sortBy = array_values((array)$sortBy);
+	$methods = array_values((array)$methods);
+
+	uasort($array, function($a, $b) use ($sortBy, $methods) {
+
+		$return = 0;
+
+		foreach( $sortBy as $key => $sort ) 
+		{
+			if( is_closure($sort) )
+			{
+				$aSort = $sort($a);
+				$bSort = $sort($b);
+			}
+			else 
+			{
+				$aSort = def($a, $sort);
+				$bSort = def($b, $sort);
+			}
+
+			$method = isset($methods[$key]) ? $methods[$key] : $methods[ ( count($methods) - 1 ) ];
+
+			$return = $method($aSort, $bSort);
+
+			if( $return !== 0 )
+			{
+				return $return;
+			}
+		}
+
+		return 0;
+	});
+
+	return $array;
+}
+
+/**
+ * arrayGroupBy
+ *
+ * Group an array of objects by an attribute of an object or the result of a closure
+ * 
+ * @param  array           $array    Array of objects
+ * @param  string/closure  $groupBy  Attribute of object or a closure. Closure gets object as parameter and should return a value that can be a key of the array
+ * @return array                     Array of arrays
+ */
+function arrayGroupBy($array, $groupBy)
+{
+	return array_reduce($array, function($arr, $item) use ($groupBy) {
+
+		// get value of attribute
+		if( is_closure($groupBy) )
+		{
+			// execute closure
+			$value = $groupBy($item);
+		} 
+		else
+		{
+			// get attribute of object
+			$value = u\def($item, $groupBy);
+		}
+
+		// build new array with value as keys
+		if( isset($arr[$value]) )
+		{
+			$arr[$value][] = $item;
+		}
+		else
+		{
+			$arr[$value] = [ $item ];
+		}
+
+		return $arr;
+
+	}, []);
+}
+

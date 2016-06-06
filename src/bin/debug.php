@@ -17,3 +17,19 @@ function pr($var, $exit=false) {
 	echo "</pre>";
 	if($exit) exit();
 }
+
+function inst($instance, $exit = false)
+{
+	$className = get_class($instance);
+	$ref = new ReflectionClass($className);
+
+	return [
+		'class' => $className,
+		'filename' => $ref->getFileName(),
+		'methods' => [
+			'public' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PUBLIC)),
+			'protected' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PROTECTED)),
+			'private' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PRIVATE))
+		]
+	];
+}

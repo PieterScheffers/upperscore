@@ -2,6 +2,8 @@
 
 namespace pisc\upperscore;
 
+use ReflectionClass;
+use ReflectionMethod;
 
 /**
  * pr

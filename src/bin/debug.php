@@ -20,16 +20,22 @@ function pr($var, $exit=false) {
 
 function inst($instance, $exit = false)
 {
-	$className = get_class($instance);
-	$ref = new ReflectionClass($className);
+	if( is_object($instance) )
+	{
+		$className = get_class($instance);
 
-	return [
-		'class' => $className,
-		'filename' => $ref->getFileName(),
-		'methods' => [
-			'public' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PUBLIC)),
-			'protected' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PROTECTED)),
-			'private' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PRIVATE))
-		]
-	];
+		$ref = new ReflectionClass($className);
+
+		return [
+			'class' => $className,
+			'filename' => $ref->getFileName(),
+			'methods' => [
+				'public' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PUBLIC)),
+				'protected' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PROTECTED)),
+				'private' => array_map(function($item) { return $item->name; }, $ref->getMethods(ReflectionMethod::IS_PRIVATE))
+			]
+		];
+	}
+
+	return [ "inst - Is a " . gettype($instance) ];
 }

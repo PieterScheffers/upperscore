@@ -104,3 +104,29 @@ function strEndsWith($haystack, $needle) {
     // search forward starting from end minus needle length characters
     return $needle === "" || (($temp = strlen($haystack) - strlen($needle)) >= 0 && strpos($haystack, $needle, $temp) !== false);
 }
+
+/**
+* Try to split an address into street and housenumber
+* This is not guaranteed to always return a correct answer
+* Source: https://github.com/paynl/sdk/blob/master/src/Helper.php
+*
+* @param string $strAddress
+* @return array
+*/
+function splitAddress($address)
+{
+    $address = trim($address);
+    $a = preg_split('/(\\s+)([0-9]+)/', $address, 2, PREG_SPLIT_DELIM_CAPTURE);
+
+    $street = trim(array_shift($a));
+    $number = trim(implode('', $a));
+
+    if( empty($street) || empty($number) ) // American address notation
+    { 
+        $a = preg_split('/([a-zA-Z]{2,})/', $address, 2, PREG_SPLIT_DELIM_CAPTURE);
+        $number = trim(array_shift($a));
+        $street = implode('', $a);
+    }
+
+    return [ $street, $number ];
+}

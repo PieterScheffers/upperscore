@@ -13,32 +13,35 @@ namespace pisc\upperscore;
  * @param  mixed         $def  default value
  * @return mixed               return object/array value or default
  */
-function defOne($arr, $key, $def="") {
-	if( $arr ) {
+function defOne($arr, $key, $def="")
+{
+	if( $arr )
+	{
 
 		// Check for function
-		if( strEndsWith($key, '()') && is_object($arr) ) {
+		if( strEndsWith($key, '()') && is_object($arr) )
+		{
 			$key = substr($key, 0, strlen($key) - 2 );
 			$result = $arr->$key();
 
-			if( $result ) {
+			if( $result )
+			{
 				return $result;
 			}
 		}
 
 		// Check for array of ArrayAccessable object
 		if( 
-			(is_array($arr) && isset($arr[$key])) || 
-			(is_object($arr) && $arr instanceof ArrayAccess) 
-		) {
-
+			(is_array($arr) || (is_object($arr) && $arr instanceof ArrayAccess)) &&
+			isset($arr[$key])
+		)
+		{
 			return $arr[$key];
-
+		}
 		// Check for object
-		} else if( is_object($arr) && isset($arr->$key) ) {
-
+		else if( is_object($arr) && isset($arr->$key) )
+		{
 			return $arr->$key;
-
 		}
 
 	}
